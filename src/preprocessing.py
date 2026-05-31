@@ -17,7 +17,7 @@ def preprocess(text):
     text = re.sub(r'[^a-zA-Z0-9\s]', ' ', text)
 
     # tokenisasi
-    tokens = word_tokenize(text)
+    tokens = text.split()
 
     # hapus stopword
     tokens = [word for word in tokens if word not in stop_words]
