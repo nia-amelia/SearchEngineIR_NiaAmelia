@@ -1,8 +1,6 @@
 import pandas as pd
 import re
 
-from sqlalchemy import create_engine
-
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 
@@ -40,19 +38,7 @@ def preprocess(text):
 # BACA DATASET
 # ==========================
 
-import os
-
-DATABASE_URL = os.getenv(
-    "DATABASE_URL",
-    "postgresql://postgres:rizqiputra@localhost:5432/SearchEngineIR"
-)
-
-engine = create_engine(DATABASE_URL)
-
-df = pd.read_sql(
-    "SELECT * FROM books",
-    engine
-)
+df = pd.read_csv("dataset/Books.csv")
 
 df["content"] = (
     df["title"].fillna("") + " " +
