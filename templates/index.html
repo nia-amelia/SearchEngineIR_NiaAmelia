@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        Fantasy Library Search Engine
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+<div class="overlay">
+    <div class="hero">
+        <h1>📚 Fantasy Library</h1>
+        <p>
+            Information Retrieval Based Book Search Engine
+        </p>
+        <div class="about-system">
+
+        This search engine uses TF-IDF and Cosine Similarity
+        to retrieve the most relevant books from the database.
+
+        </div>
+
+        <form method="POST" class="search-form">
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    name="query"
+                    value="{{ query }}"
+                    placeholder="Search books..."
+                    required
+                >
+
+                <button type="submit">
+                    Search
+                </button>
+
+            </div>
+
+        </form>
+
+        <div class="stats-box">
+
+            📚 {{ total_books }} Books Indexed
+
+        </div> 
+
+    </div>
+
+    {% if results is not none %}
+
+<div class="results-header">
+
+    ✨ Found
+    <strong>{{ results|length }}</strong>
+    books for
+
+    <span class="keyword">
+        "{{ query }}"
+    </span>
+
+</div>
+
+{% for _, row in results.iterrows() %}
+
+<div class="book-card">
+    {% if row['thumbnail'] %}
+
+    <div class="book-image">
+
+        <img
+            src="{{ row['thumbnail'] }}"
+            alt="Book Cover"
+        >
+
+    </div>
+    {% endif %}
+
+    <div class="book-content">
+
+        <h3>
+            📖 {{ row['title'] }}
+        </h3>
+
+        <div class="meta">
+            👤 {{ row['author'] }}
+        </div>
+
+        <div class="meta">
+            📚 {{ row['genre'] }}
+        </div>
+
+        <p class="description">
+
+            {{ row['description'][:250] }}
+
+            {% if row['description']|length > 250 %}
+                ...
+            {% endif %}
+
+        </p>
+
+        <div class="score">
+
+            ⭐ Match Score:
+            {{ "%.0f"|format(row['score'] * 100) }}%
+
+        </div>
+    </div>
+
+</div>
+
+{% endfor %}
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+<footer>
+
+    Information Retrieval Project | Search Engine | 2026
+
+</footer>
+
+</body>
+
+</html>
