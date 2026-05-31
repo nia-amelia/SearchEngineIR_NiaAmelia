@@ -1,9 +1,6 @@
 import pandas as pd
 import re
 
-from nltk.tokenize import word_tokenize
-from nltk.corpus import stopwords
-
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -12,7 +9,14 @@ from sklearn.metrics.pairwise import cosine_similarity
 # PREPROCESSING
 # ==========================
 
-stop_words = set(stopwords.words('english'))
+stop_words = {
+    "a","an","the","and","or","but",
+    "is","are","was","were","be","been",
+    "in","on","at","to","for","of",
+    "with","by","from","that","this",
+    "it","as","not","have","has","had",
+    "will","would","can","could","should"
+}
 
 def preprocess(text):
 
@@ -22,7 +26,7 @@ def preprocess(text):
 
     text = re.sub(r'[^a-zA-Z0-9\s]', ' ', text)
 
-    tokens = word_tokenize(text)
+    tokens = text.split()
 
     tokens = [word for word in tokens if word not in stop_words]
 
