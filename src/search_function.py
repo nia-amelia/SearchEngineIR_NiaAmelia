@@ -76,8 +76,8 @@ def search_books(query):
     results = df[df["score"] > 0]
 
     results = results.sort_values(
-        by="score",
-        ascending=False
-    ).head(5)
+    by="score",
+    ascending=False
+    )
 
     return results
